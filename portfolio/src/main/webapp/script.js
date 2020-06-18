@@ -41,4 +41,3 @@ function typeWriter() {
     setTimeout(typeWriter, speed);
   }
 }
-
