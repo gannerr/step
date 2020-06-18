@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <input type="checkbox" id="nav" class="hidden">
+        <label for="nav" class="nav-btn">
+          <i></i>
+          <i></i>
+          <i></i>
+        </label>
+        <div class="nav-wrapper">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="food.html">Food</a></li>
+        </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div id="content">
+      <h1 id="title"><script>typeWriter()</script></h1>
+      <img src='/images/pie.jpg'>
+      <p>This is my portfolio.</p>
+      
+      <p>Just to explain my background...</p>
+      <p>I am originally from Chicago! Well, a small suburb called Long Grove :p</p>
+      <img src='/images/longgrove.jpg'>
+      <figcaption>This is my hometown! Cozy</figcaption>
+
+      <p>I currently attend Stanford University! I study computer science. Beep boop. I've also
+          taken classes on philosophy, molecular gastronomy(read: foooood), and earth science!
+      </p>
+      <p>Outside of class, I really enjoy playing volleyball, basketball, badminton, and spikeball! I also occasionally
+          find myself playing an unhealhty amount of League of Legends. Add me @gucci gan. When I'm not in the gym or the
+          computer lounge, you'll probably find me exploring beaches(Big Sur, Half Moon Bay, etc.) and consuming good eats.
+          Here are some pictures from the school year that describe me :D </p>
+      
+      <p>Click here to get a random message:</p>
+      <button onclick="addRandomGreeting()">Hello</button>
+      <div id="greeting-container"></div>
+    </div>
+  </body>
+</html>
