@@ -17,7 +17,7 @@
  */
 function addRandomGreeting() {
   const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+      ['I like eating pie', 'I like making pie!', 'I like throwing pie！', 'I want a pie!'];
 
   // Pick a random greeting.
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
@@ -25,4 +25,19 @@ function addRandomGreeting() {
   // Add it to the page.
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
+}
+
+/**
+ * Creates typewriter effect for title
+ */
+var charIndex = 0;
+var txt = "Andrew's Portfolio"; //Text
+var speed = 50; /* The speed/duration of the effect in milliseconds */
+
+function typeWriter() {
+  if (charIndex < txt.length) {
+    document.getElementById("title").innerHTML += txt.charAt(charIndex);
+    charIndex++;
+    setTimeout(typeWriter, speed);
+  }
 }

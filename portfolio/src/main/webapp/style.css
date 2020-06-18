@@ -7,3 +7,19 @@
 #greeting-container {
   margin-top: 20px;
 }
+
+body {
+  color: white;
+}
+
+html { 
+  background: url("/images/portfolioMainPageGIF.gif") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+h1 {
+    text-align: center;
+}
