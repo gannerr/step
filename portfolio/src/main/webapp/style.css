@@ -16,10 +16,11 @@ body {
   font-family: Poppins;
   font-weight: 400;
   color: white;
+  background: black;
 }
 
 html { 
-  background: url("/images/portfolioMainPageGIF.gif") no-repeat center center fixed; 
+  /*background: url("/images/portfolioMainPageGIF.gif") no-repeat center center fixed; */
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -36,6 +37,53 @@ h1 {
 
 * {
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.titlecontainer{
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+.titlecontainer span{
+  text-transform: uppercase;
+  display: block;
+}
+
+.homepageHeader1{
+  color: white;
+  font-size: 60px;
+  font-weight: 700;
+  letter-spacing: 8px;
+  margin-bottom: 20px;
+  background: black;
+  position: relative;
+  animation: text 3s 1;
+}
+
+.homepageHeader2{
+  font-size: 30px;
+  color: #51e2f5;
+}
+
+@keyframes text{
+  0%{
+    color: black;
+    margin-bottom: -40px;
+  }
+  30%{
+    letter-spacing: 25px;
+    margin-bottom: -40px;
+  }
+  85%{
+    letter-spacing: 8px;
+    margin-bottom: -40px;
+  }
 }
 
 nav {
