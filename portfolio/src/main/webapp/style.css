@@ -5,7 +5,7 @@
 }
 
 #greeting-container {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 body {
@@ -13,7 +13,7 @@ body {
   padding: 0;
   width: 100%;
   height: 100vh;
-  font-family: Poppins;
+  font-family: poppins;
   font-weight: 400;
   color: white;
   background: black;
@@ -30,8 +30,10 @@ html {
   height: 100vh;
 }
 
-h1 {
-  text-align: center;
+p {
+  color: white;
+  font-size: 30px;
+  text-align: left;
 }
 
 * {
@@ -86,7 +88,7 @@ h1 {
 }
 
 nav {
-  padding: 8px;
+  padding: 16px;
 }
 
 nav ul {
@@ -150,4 +152,73 @@ nav ul li a {
 
 .hidden {
   display: none;
+}
+
+.aboutimg1, .aboutimg2, .aboutimg3, .aboutimg4{
+  position:relative;
+  opacity:0.70;
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+}
+
+.aboutimg1{
+  background-image:url('/images/blackbackground.jpg');
+  min-height:100%;
+}
+
+.aboutimg2{
+  background-image:url('/images/longgrove.jpg');
+  min-height:400px;
+}
+
+.aboutimg3{
+  background-image:url('/images/stanford.jpg');
+  min-height:400px;
+}
+
+.aboutimg4{
+  background-image:url('/images/beach.jpg');
+  min-height:400px;
+}
+
+.section{
+  text-align:center;
+  padding:50px 80px;
+}
+
+.section-dark{
+  background-color: black;
+  color: white;
+}
+
+.abouttext{
+  position:absolute;
+  top:50%;
+  width:100%;
+  text-align:center;
+  color: white;
+  font-size:27px;
+  letter-spacing:8px;
+  text-transform:uppercase;
+}
+
+.abouttext .border{
+  background-color: black;
+  color: white;
+  padding:20px;
+  font-weight: 700;
+  letter-spacing: 8px;
+  margin-bottom: 20px;
+}
+
+.abouttext .border.trans{
+  background-color:transparent;
+}
+
+@media(max-width:568px){
+  .aboutimg1, .aboutimg2, .aboutimg3, .aboutimg4{
+    background-attachment:scroll;
+  }
 }
