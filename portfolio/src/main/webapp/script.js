@@ -26,18 +26,3 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
-
-/**
- * Creates typewriter effect for title
- */
-var charIndex = 0;
-var txt = "Andrew's Portfolio"; //Text
-var speed = 50; /* The speed/duration of the effect in milliseconds */
-
-function typeWriter() {
-  if (charIndex < txt.length) {
-    document.getElementById("title").innerHTML += txt.charAt(charIndex);
-    charIndex++;
-    setTimeout(typeWriter, speed);
-  }
-}
