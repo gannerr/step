@@ -156,7 +156,7 @@ nav ul li a {
 
 .aboutimg1, .aboutimg2, .aboutimg3, .aboutimg4{
   position:relative;
-  opacity:0.70;
+  opacity:1;
   background-position:center;
   background-size:cover;
   background-repeat:no-repeat;
@@ -202,15 +202,6 @@ nav ul li a {
   font-size:27px;
   letter-spacing:8px;
   text-transform:uppercase;
-}
-
-.abouttext .border{
-  background-color: black;
-  color: white;
-  padding:20px;
-  font-weight: 700;
-  letter-spacing: 8px;
-  margin-bottom: 20px;
 }
 
 .abouttext .border.trans{
