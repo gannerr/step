@@ -8,7 +8,7 @@
 }
 
 .blackBackgroundImage {
-  background-image: url('/images/blackbackground.jpg');
+  background: black;
   min-height: 100%;
 }
 

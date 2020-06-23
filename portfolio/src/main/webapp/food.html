@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>My Portfolio</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/food.css">
     <script src="script.js"></script>
   </head>
@@ -29,26 +29,130 @@
 
     <div class="blackBackgroundImage">
       <div class="titlecontainer">
-        <span class="homepageHeader1">FOOOOOOD</span>
+        <span class="homepageHeader1">Menu</span>
+        <span class="homepageHeader2">My favorite dishes from the past year ^.^</span>
       </div>
     </div>
 
-
-    <div class="foodImage">
+    <div class="transitionImage">
       <div class="abouttext">
         <span class="border trans">
-          Hehe...
+          Appetizers
         </span>
       </div>
     </div>
 
     <section class="section section-dark">
-      <p>
-        Now that I'm home, cooking and baking have become part of my everyday life. Anything from egg
-        sandwiches (that I found on tiktok) to sweet cornbread, I'm whipping it up! And eating, of course.
-        Now, feast your eyes!
-      </p>
+      <div class="row">
+        <div class="column">
+          <img src="/images/appetizers/pate.jpg" width="200" height="100" onclick="myFunction(this);">
+          <h2>Pate</h2>
+        </div>
+        <div class="column">
+          <img src="/images/appetizers/cheesecurds.jpg" width="200" height="100" onclick="myFunction(this);">
+          <h2>Cheesecurds</h2>
+        </div>
+        <div class="column">
+          <img src="/images/appetizers/yolkbun.jpg" width="200" height="100" onclick="myFunction(this);">
+          <h2>Egg Yolk Bun</h2>
+        </div>
+        <div class="column">
+          <img src="/images/appetizers/karaage.jpg" width="200" height="100" onclick="myFunction(this);">
+          <h2>Chicken Karaage</h2>
+        </div>
+      </div>
     </section>
-   
+
+    <div class="transitionImage">
+      <div class="abouttext">
+        <span class="border trans">
+          Entrees
+        </span>
+      </div>
+    </div>
+
+    <section class="section section-dark">
+      <div class="row">
+        <div class="column">
+          <img src="/images/entrees/squidinkramen.jpg" width="200" height="100" onclick="myFunction(this);">
+          <h2>Squid Ink Ramen</h2>
+        </div>
+        <div class="column">
+          <img src="/images/entrees/porkbelly.jpg" width="200" height="100" onclick="myFunction(this);">
+          <h2>Braised Pork Belly</h2>
+        </div>
+        <div class="column">
+          <img src="/images/entrees/samgyupsal.jpg" width="200" height="100" onclick="myFunction(this);">
+          <h2>Samgyeopsal</h2>
+        </div>
+        <div class="column">
+          <img src="/images/entrees/thai.jpg" width="200" height="100" onclick="myFunction(this);">
+          <h2>All Thai food.</h2>
+        </div>
+      </div>
+    </section>
+
+    <div class="transitionImage">
+      <div class="abouttext">
+        <span class="border trans">
+          Dessert
+        </span>
+      </div>
+    </div>
+
+    <section class="section section-dark">
+      <div class="row">
+        <div class="column">
+          <img src="/images/dessert/waffle.jpg" width="200" height="100" onclick="myFunction(this);">
+          <h2>Bubble Waffle</h2>
+        </div>
+        <div class="column">
+          <img src="/images/dessert/toffeecake.jpg" width="200" height="100" onclick="myFunction(this);">
+          <h2>Toffee Cake</h2>
+        </div>
+        <div class="column">
+          <img src="/images/dessert/baklava.jpg" width="200" height="100" onclick="myFunction(this);">
+          <h2>Baklava</h2>
+        </div>
+        <div class="column">
+          <img src="/images/dessert/crepecake.jpg" width="200" height="100" onclick="myFunction(this);">
+          <h2>Matcha Crepe Cake</h2>
+        </div>
+      </div>
+    </section>
+
+    <div class="transitionImage">
+      <div class="abouttext">
+        <span class="border trans">
+          Chef's Choice
+        </span>
+      </div>
+    </div>
+
+    <section class="section section-dark">
+      <div class="row">
+        <div class="column">
+          <img src="/images/personal/whitecastle.jpg" width="200" height="100" onclick="myFunction(this);">
+          <h2>Sliders</h2>
+        </div>
+        <div class="column">
+          <img src="/images/personal/hotmilk.jpg" width="200" height="100" onclick="myFunction(this);">
+          <h2>IYKYK</h2>
+        </div>
+        <div class="column">
+          <img src="/images/personal/icecream.jpg" width="200" height="100" onclick="myFunction(this);">
+          <h2>Ice Cream</h2>
+        </div>
+        <div class="column">
+          <img src="/images/personal/boba.jpg" width="200" height="100" onclick="myFunction(this);">
+          <h2>Brown Sugar Milk Tea. Yeah I'm basic.</h2>
+        </div>
+      </div>
+    </section>
+
+    <div class="foodImageContainer">
+      <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+      <img id="expandedImg" style="width:100%">
+    </div>
   </body>
 </html>
