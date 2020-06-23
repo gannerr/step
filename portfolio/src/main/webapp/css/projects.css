@@ -52,3 +52,15 @@
     background-attachment: scroll;
   }
 }
+
+a { 
+  color: white;
+}
+a:visited { 
+  text-decoration: none; 
+  color: white;
+}
+
+h1 {
+  font-size: 36px;
+}
