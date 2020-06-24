@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-function myFunction(imgs) {
+function expandImage(imgs) {
   var expandImg = document.getElementById("expandedImg");
   expandImg.src = imgs.src;
   expandImg.parentElement.style.display = "block";
+  window.scrollTo(0,document.body.scrollHeight);
 }
