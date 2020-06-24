@@ -33,12 +33,6 @@
   background-color: transparent;
 }
 
-@media(max-width:568px){
-  .blackbackgroundimage, .fooddesertimage, .roomrimage {
-    background-attachment: scroll;
-  }
-}
-
 a { 
   color: white;
 }
