@@ -167,3 +167,9 @@ nav ul li a {
   background: black;
   min-height: 100%;
 }
+
+@media(max-width:568px) {
+  .parallax-background-image{
+    background-attachment:scroll;
+  }
+}

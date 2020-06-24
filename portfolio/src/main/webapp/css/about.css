@@ -37,9 +37,3 @@
 .abouttext .border.trans {
   background-color: transparent;
 }
-
-@media(max-width:568px) {
-  .black-background-image, .long-grove-image, .stanford-image, .hobbies-image{
-    background-attachment:scroll;
-  }
-}
