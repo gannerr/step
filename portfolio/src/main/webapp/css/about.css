@@ -1,14 +1,14 @@
-.longgroveimage {
+.long-grove-image {
   background-image: url('/images/longgrove.jpg');
   min-height: 400px;
 }
 
-.stanfordimage {
+.stanford-image {
   background-image: url('/images/stanford.jpg');
   min-height: 400px;
 }
 
-.hobbiesimage {
+.hobbies-image {
   background-image: url('/images/beach.jpg');
   min-height: 400px;
 }
@@ -39,7 +39,7 @@
 }
 
 @media(max-width:568px) {
-  .blackbackgroundimage, .longgroveimage, .stanfordimage, .hobbiesimage{
+  .black-background-image, .long-grove-image, .stanford-image, .hobbies-image{
     background-attachment:scroll;
   }
 }

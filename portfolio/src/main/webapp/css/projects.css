@@ -1,9 +1,9 @@
-.fooddesertimage {
+.food-desert-image {
   background-image: url('/images/fooddesert.jpg');
   min-height: 400px;
 }
 
-.roomrimage {
+.roomr-image {
   background-image: url('/images/roomr.jpg');
   min-height: 400px;
 }

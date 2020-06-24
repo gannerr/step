@@ -56,7 +56,7 @@ p {
   display: block;
 }
 
-.homepageHeader1 {
+.homepageheader1 {
   color: white;
   font-size: 60px;
   font-weight: 700;
@@ -67,7 +67,7 @@ p {
   animation: text 3s 1;
 }
 
-.homepageHeader2 {
+.homepageheader2 {
   font-size: 30px;
   color: #51e2f5;
 }
@@ -163,7 +163,7 @@ nav ul li a {
   background-attachment: fixed;
 }
 
-.blackbackgroundimage {
+.black-background-image {
   background: black;
   min-height: 100%;
 }

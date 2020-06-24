@@ -1,4 +1,4 @@
-.transitionimage {
+.transition-image {
   background: black;
   color: white;
   min-height: 50px;
@@ -35,7 +35,7 @@
 }
 
 @media(max-width:568px){
-  .blackBackgroundImage, .foodImage {
+  .black-background-image, .food-image {
     background-attachment: scroll;
   }
 }
@@ -61,7 +61,7 @@
   clear: both;
 }
 
-.foodimagecontainer {
+.food-image-container {
   display: block;
   position: relative;
   margin-left: auto;
