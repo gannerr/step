@@ -12,17 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Adds a random greeting to the page.
- */
-function addRandomGreeting() {
-  const greetings =
-      ['I like eating pie', 'I like making pie!', 'I like throwing pie！', 'I want a pie!'];
-
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+function expandImage(imgs) {
+  var expandImg = document.getElementById("expandedImg");
+  expandImg.src = imgs.src;
+  expandImg.parentElement.style.display = "block";
+  window.scrollTo(0,document.body.scrollHeight);
 }

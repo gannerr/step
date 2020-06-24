@@ -1,0 +1,52 @@
+.food-desert-image {
+  background-image: url('/images/fooddesert.jpg');
+  min-height: 400px;
+}
+
+.roomr-image {
+  background-image: url('/images/roomr.jpg');
+  min-height: 400px;
+}
+
+.section {
+  text-align:center;
+  padding:50px 80px;
+}
+
+.section-dark {
+  background-color: black;
+  color: white;
+}
+
+.abouttext {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 27px;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+}
+
+.abouttext .border.trans {
+  background-color: transparent;
+}
+
+@media(max-width:568px){
+  .blackbackgroundimage, .fooddesertimage, .roomrimage {
+    background-attachment: scroll;
+  }
+}
+
+a { 
+  color: white;
+}
+a:visited { 
+  text-decoration: none; 
+  color: white;
+}
+
+h1 {
+  font-size: 36px;
+}

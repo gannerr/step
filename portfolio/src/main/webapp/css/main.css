@@ -5,7 +5,7 @@
 }
 
 #greeting-container {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 body {
@@ -13,7 +13,7 @@ body {
   padding: 0;
   width: 100%;
   height: 100vh;
-  font-family: Poppins;
+  font-family: poppins;
   font-weight: 400;
   color: white;
   background: black;
@@ -30,8 +30,10 @@ html {
   height: 100vh;
 }
 
-h1 {
-  text-align: center;
+p {
+  color: white;
+  font-size: 30px;
+  text-align: left;
 }
 
 * {
@@ -54,7 +56,7 @@ h1 {
   display: block;
 }
 
-.homepageHeader1 {
+.homepageheader1 {
   color: white;
   font-size: 60px;
   font-weight: 700;
@@ -65,7 +67,7 @@ h1 {
   animation: text 3s 1;
 }
 
-.homepageHeader2 {
+.homepageheader2 {
   font-size: 30px;
   color: #51e2f5;
 }
@@ -86,7 +88,7 @@ h1 {
 }
 
 nav {
-  padding: 8px;
+  padding: 16px;
 }
 
 nav ul {
@@ -150,4 +152,18 @@ nav ul li a {
 
 .hidden {
   display: none;
+}
+
+.parallax-background-image{
+  position: relative;
+  opacity: 1;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.black-background-image {
+  background: black;
+  min-height: 100%;
 }
