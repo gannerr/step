@@ -1,23 +1,9 @@
-.blackBackgroundImage, .foodDesertImage, .roomrImage {
-  position: relative;
-  opacity: 1;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-
-.blackBackgroundImage {
-  background: black;
-  min-height: 100%;
-}
-
-.foodDesertImage {
+.fooddesertimage {
   background-image: url('/images/fooddesert.jpg');
   min-height: 400px;
 }
 
-.roomrImage {
+.roomrimage {
   background-image: url('/images/roomr.jpg');
   min-height: 400px;
 }
@@ -48,7 +34,7 @@
 }
 
 @media(max-width:568px){
-  .blackBackgroundImage, .foodDesertImage, .roomrImage {
+  .blackbackgroundimage, .fooddesertimage, .roomrimage {
     background-attachment: scroll;
   }
 }

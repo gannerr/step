@@ -1,18 +1,4 @@
-.blackBackgroundImage, .transitionImage {
-  position: relative;
-  opacity: 1;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-
-.blackBackgroundImage {
-  background: black;
-  min-height: 100%;
-}
-
-.transitionImage {
+.transitionimage {
   background: black;
   color: white;
   min-height: 50px;
@@ -75,7 +61,7 @@
   clear: both;
 }
 
-.foodImageContainer {
+.foodimagecontainer {
   display: block;
   position: relative;
   margin-left: auto;

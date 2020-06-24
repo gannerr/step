@@ -1,28 +1,14 @@
-.blackBackgroundImage, .longGroveImage, .stanfordImage, .hobbiesImage {
-  position: relative;
-  opacity: 1;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-
-.blackBackgroundImage {
-  background: black;
-  min-height: 100%;
-}
-
-.longGroveImage {
+.longgroveimage {
   background-image: url('/images/longgrove.jpg');
   min-height: 400px;
 }
 
-.stanfordImage {
+.stanfordimage {
   background-image: url('/images/stanford.jpg');
   min-height: 400px;
 }
 
-.hobbiesImage {
+.hobbiesimage {
   background-image: url('/images/beach.jpg');
   min-height: 400px;
 }
@@ -53,7 +39,7 @@
 }
 
 @media(max-width:568px) {
-  .blackBackgroundImage, .longGroveImage, .stanfordImage, .hobbiesImage{
+  .blackbackgroundimage, .longgroveimage, .stanfordimage, .hobbiesimage{
     background-attachment:scroll;
   }
 }

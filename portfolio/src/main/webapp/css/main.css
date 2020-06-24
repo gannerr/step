@@ -153,3 +153,17 @@ nav ul li a {
 .hidden {
   display: none;
 }
+
+.parallax-background-image{
+  position: relative;
+  opacity: 1;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.blackbackgroundimage {
+  background: black;
+  min-height: 100%;
+}
