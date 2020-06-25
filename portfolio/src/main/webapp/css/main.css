@@ -4,8 +4,10 @@
   width: 650px;
 }
 
-#greeting-container {
+#quote-container {
   margin-top: 30px;
+  color: white;
+  background: black;
 }
 
 body {

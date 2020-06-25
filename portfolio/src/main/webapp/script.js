@@ -18,3 +18,9 @@ function expandImage(imgs) {
   expandImg.parentElement.style.display = "block";
   window.scrollTo(0,document.body.scrollHeight);
 }
+
+function getHelloName() {
+  fetch('/data').then(response => response.text()).then((quote) => {
+    document.getElementById('name-container').innerText = quote;
+  });
+}
