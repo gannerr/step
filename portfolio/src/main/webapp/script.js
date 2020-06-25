@@ -18,3 +18,11 @@ function expandImage(imgs) {
   expandImg.parentElement.style.display = "block";
   window.scrollTo(0,document.body.scrollHeight);
 }
+
+function getReviews() {
+  fetch('/data').then(response => response.json()).then((reviews) => {
+    for(var i = 0; i < reviews.length; i++) {
+      document.getElementById('reviews-container').innerText += reviews[i] + '\n';
+    }
+  });
+}
