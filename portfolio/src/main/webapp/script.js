@@ -19,8 +19,10 @@ function expandImage(imgs) {
   window.scrollTo(0,document.body.scrollHeight);
 }
 
-function getHelloName() {
-  fetch('/data').then(response => response.text()).then((quote) => {
-    document.getElementById('name-container').innerText = quote;
+function getReviews() {
+  fetch('/data').then(response => response.json()).then((reviews) => {
+    for(var i = 0; i < reviews.length; i++) {
+      document.getElementById('reviews-container').innerText += reviews[i] + '\n';
+    }
   });
 }
