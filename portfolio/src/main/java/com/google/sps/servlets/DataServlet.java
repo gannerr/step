@@ -15,6 +15,9 @@
 package com.google.sps.servlets;
 
 import java.io.IOException;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 import com.google.gson.Gson;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -23,6 +26,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
@@ -48,6 +52,12 @@ public class DataServlet extends HttpServlet {
     String input = getParameter(request, "reviewer-input", "");
     String review = name + " said: \n" + input;
     reviews.add(review);
+    
+    Entity reviewEntity = new Entity("Task");
+    reviewEntity.setProperty("review", review);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(reviewEntity);
     response.sendRedirect("/index.html");
   }
 
