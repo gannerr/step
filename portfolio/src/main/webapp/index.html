@@ -34,6 +34,17 @@
 
       <button onclick="getReviews()">Gimme some reviews!</button>
       <div id="reviews-container"></div> 
+
+      <form action="/reviews" method="POST">
+
+        <p>Give me food reviews!</p>
+        <p>Name:</p>
+        <input type="text" name="reviewer-name"><br>
+        <p>Review:</p>
+        <textarea name="reviewer-input">Enter your review here</textarea><br>
+
+        <input type="submit" />
+      </form>
     </div>
   </body>
 </html>

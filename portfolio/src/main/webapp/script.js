@@ -20,9 +20,9 @@ function expandImage(imgs) {
 }
 
 function getReviews() {
-  fetch('/data').then(response => response.json()).then((reviews) => {
+  fetch('/reviews').then(response => response.json()).then((reviews) => {
     for(var review of reviews) {
-      document.getElementById('reviews-container').innerText += review + '\n';
+      document.getElementById('reviews-container').innerText += review + '\n\n';
     }
   });
 }
