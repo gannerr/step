@@ -16,6 +16,7 @@ package com.google.sps.servlets;
 
 import java.io.IOException;
 import com.google.gson.Gson;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
@@ -23,16 +24,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
-@WebServlet("/data")
+@WebServlet("/reviews")
 public class DataServlet extends HttpServlet {
   private ArrayList<String> reviews = new ArrayList<String>();
 
   @Override
   public void init() {
-    reviews.add("The toffee cake is so sticky and sweet! Perfect with ice cream. - Tof Fee");
-    reviews.add("Holy 30 sliders seems insane but so good. - Sly Dur");
-    reviews.add("Liver is disgusting. - Pat Tay");
   }
 
   @Override
@@ -40,5 +39,23 @@ public class DataServlet extends HttpServlet {
     String reviewjson = new Gson().toJson(reviews);
     response.setContentType("text/html;");
     response.getWriter().println(reviewjson);
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get the input from the form.
+    String name = getParameter(request, "reviewer-name", "");
+    String input = getParameter(request, "reviewer-input", "");
+    String review = name + " said: \n" + input;
+    reviews.add(review);
+    response.sendRedirect("/index.html");
+  }
+
+  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+    String value = request.getParameter(name);
+    if (value == null) {
+      return defaultValue;
+    }
+    return value;
   }
 }
