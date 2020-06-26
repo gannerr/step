@@ -39,19 +39,19 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query reviewquery = new Query("Task").addSort("review", SortDirection.DESCENDING);
+    Query reviewQuery = new Query("Task").addSort("review", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    PreparedQuery allreviews = datastore.prepare(reviewquery);
+    PreparedQuery allReviews = datastore.prepare(reviewQuery);
     ArrayList<String> reviews = new ArrayList<String>();
 
-    for (Entity review : allreviews.asIterable()) {
-      String reviewoutput = (String) review.getProperty("review");
-      reviews.add(reviewoutput);
+    for (Entity review : allReviews.asIterable()) {
+      String reviewOutput = (String) review.getProperty("review");
+      reviews.add(reviewOutput);
     }
 
-    String reviewjson = new Gson().toJson(reviews);
+    String reviewJson = new Gson().toJson(reviews);
     response.setContentType("text/html;");
-    response.getWriter().println(reviewjson);
+    response.getWriter().println(reviewJson);
   }
 
   @Override
