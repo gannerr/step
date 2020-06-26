@@ -56,7 +56,8 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Get the input from the form.
+    // Get the input from the form. DefaultValue is "" to ensure consistent "fails" across all calls to getParameter
+    // TODO: Make checks if name/input = DefaultValue, then don't add comment.
     String name = getParameter(request, "reviewer-name", "");
     String input = getParameter(request, "reviewer-input", "");
     String review = name + " said: \n" + input;
