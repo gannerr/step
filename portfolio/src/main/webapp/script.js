@@ -21,6 +21,7 @@ function expandImage(imgs) {
 
 function getReviews() {
   fetch('/reviews').then(response => response.json()).then((reviews) => {
+    document.getElementById('reviews-container').innerText = "";
     for(let review of reviews) {
       document.getElementById('reviews-container').innerText += review + '\n\n';
     }

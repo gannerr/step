@@ -18,6 +18,9 @@ import java.io.IOException;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -27,19 +30,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/reviews")
 public class DataServlet extends HttpServlet {
-  private ArrayList<String> reviews = new ArrayList<String>();
-
   @Override
   public void init() {
   }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    Query reviewquery = new Query("Task").addSort("review", SortDirection.DESCENDING);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery allreviews = datastore.prepare(reviewquery);
+    ArrayList<String> reviews = new ArrayList<String>();
+
+    for (Entity review : allreviews.asIterable()) {
+      String reviewoutput = (String) review.getProperty("review");
+      reviews.add(reviewoutput);
+    }
+
     String reviewjson = new Gson().toJson(reviews);
     response.setContentType("text/html;");
     response.getWriter().println(reviewjson);
@@ -51,8 +60,7 @@ public class DataServlet extends HttpServlet {
     String name = getParameter(request, "reviewer-name", "");
     String input = getParameter(request, "reviewer-input", "");
     String review = name + " said: \n" + input;
-    reviews.add(review);
-    
+
     Entity reviewEntity = new Entity("Task");
     reviewEntity.setProperty("review", review);
 
