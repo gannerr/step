@@ -18,6 +18,9 @@ import java.io.IOException;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -27,45 +30,47 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/reviews")
 public class DataServlet extends HttpServlet {
-  private ArrayList<String> reviews = new ArrayList<String>();
-
   @Override
   public void init() {
   }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String reviewjson = new Gson().toJson(reviews);
+    Query reviewQuery = new Query("Task").addSort("review", SortDirection.DESCENDING);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery allReviews = datastore.prepare(reviewQuery);
+    ArrayList<String> reviews = new ArrayList<String>();
+
+    for (Entity review : allReviews.asIterable()) {
+      String reviewOutput = (String) review.getProperty("review");
+      reviews.add(reviewOutput);
+    }
+
+    String reviewJson = new Gson().toJson(reviews);
     response.setContentType("text/html;");
-    response.getWriter().println(reviewjson);
+    response.getWriter().println(reviewJson);
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Get the input from the form.
-    String name = getParameter(request, "reviewer-name", "");
-    String input = getParameter(request, "reviewer-input", "");
+    // Get the input from the form. If we have null/empty input, abort.
+    String name = request.getParameter("reviewer-name");
+    String input = request.getParameter("reviewer-input");
+
+    if(name.length() == 0 || input.length() == 0) {
+        response.sendRedirect("/index.html");
+        return;
+    }
+
     String review = name + " said: \n" + input;
-    reviews.add(review);
-    
     Entity reviewEntity = new Entity("Task");
     reviewEntity.setProperty("review", review);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(reviewEntity);
     response.sendRedirect("/index.html");
-  }
-
-  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
-    String value = request.getParameter(name);
-    if (value == null) {
-      return defaultValue;
-    }
-    return value;
   }
 }
