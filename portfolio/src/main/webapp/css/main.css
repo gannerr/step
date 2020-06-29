@@ -58,7 +58,7 @@ p {
   display: block;
 }
 
-.homepageheader1 {
+.homepage-header-1 {
   color: white;
   font-size: 60px;
   font-weight: 700;
@@ -69,7 +69,7 @@ p {
   animation: text 3s 1;
 }
 
-.homepageheader2 {
+.homepage-header-2 {
   font-size: 30px;
   color: #51e2f5;
 }

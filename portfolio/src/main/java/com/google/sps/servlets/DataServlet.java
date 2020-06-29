@@ -44,13 +44,25 @@ public class DataServlet extends HttpServlet {
     PreparedQuery allReviews = datastore.prepare(reviewQuery);
     ArrayList<String> reviews = new ArrayList<String>();
 
+    int maxComments = getMaxReviews(request);
+
+    if (maxComments == -1) {
+      response.setContentType("text/html");
+      response.getWriter().println("Please enter a positive integer");
+      return;
+    }
+
+    int commentCount = 0;
     for (Entity review : allReviews.asIterable()) {
-      String reviewOutput = (String) review.getProperty("review");
-      reviews.add(reviewOutput);
+      if(commentCount < maxComments){
+        String reviewOutput = (String) review.getProperty("review");
+        reviews.add(reviewOutput);
+      }
+      commentCount++;
     }
 
     String reviewJson = new Gson().toJson(reviews);
-    response.setContentType("text/html;");
+    response.setContentType("application/json;");
     response.getWriter().println(reviewJson);
   }
 
@@ -72,5 +84,27 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(reviewEntity);
     response.sendRedirect("/reviews.html");
+  }
+
+  private int getMaxReviews(HttpServletRequest request) {
+    // Get the input from the form.
+    String maxReviews = request.getParameter("max-reviews");
+
+    // Convert the input to an int.
+    int maxReview;
+    try {
+      maxReview = Integer.parseInt(maxReviews);
+    } catch (NumberFormatException e) {
+      System.err.println("Could not convert to int: " + maxReviews);
+      return -1;
+    }
+
+    // Check that the input is positive
+    if (maxReview < 1) {
+      System.err.println("Surely you want to see SOME reviews");
+      return -1;
+    }
+
+    return maxReview;
   }
 }
