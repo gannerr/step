@@ -58,8 +58,8 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form. DefaultValue is "" to ensure consistent "fails" across all calls to getParameter
     // TODO: Make checks if name/input = DefaultValue, then don't add comment.
-    String name = getParameter(request, "reviewer-name", "");
-    String input = getParameter(request, "reviewer-input", "");
+    String name = getParameter(request, "reviewer-name", null);
+    String input = getParameter(request, "reviewer-input", null);
     String review = name + " said: \n" + input;
 
     Entity reviewEntity = new Entity("Task");
@@ -72,9 +72,6 @@ public class DataServlet extends HttpServlet {
 
   private String getParameter(HttpServletRequest request, String name, String defaultValue) {
     String value = request.getParameter(name);
-    if (value == null) {
-      return defaultValue;
-    }
     return value;
   }
 }
