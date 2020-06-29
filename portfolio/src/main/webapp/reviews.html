@@ -27,11 +27,25 @@
       </nav>
     </div>
 
-    <div id="content">
+    <div class="parallax-background-image black-background-image">
       <div class="titlecontainer">
-        <span class="homepageheader1">Andrew Gan</span>
-        <span class="homepageheader2">Sit Back & Relax!</span>
-      </div> 
+        <span class="homepageheader1">~Food Reviews~</span>
+        <span class="homepageheader2">Gimme your love, or your roasts xD</span>
+      </div>
     </div>
+
+    <section class="section section-dark">
+      <button onclick="getReviews()">Gimme some reviews!</button>
+      <div id="reviews-container"></div> 
+
+      <form action="/reviews" method="POST">
+        <p>Give me food reviews!</p>
+        <p>Name:</p>
+        <input type="text" name="reviewer-name"><br>
+        <p>Review:</p>
+        <textarea name="reviewer-input"></textarea><br>
+        <input type="submit" />
+      </form>
+    </section>
   </body>
 </html>

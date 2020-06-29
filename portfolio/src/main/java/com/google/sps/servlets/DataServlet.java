@@ -61,7 +61,7 @@ public class DataServlet extends HttpServlet {
     String input = request.getParameter("reviewer-input");
 
     if(name.length() == 0 || input.length() == 0) {
-        response.sendRedirect("/index.html");
+        response.sendRedirect("/reviews.html");
         return;
     }
 
@@ -71,6 +71,6 @@ public class DataServlet extends HttpServlet {
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(reviewEntity);
-    response.sendRedirect("/index.html");
+    response.sendRedirect("/reviews.html");
   }
 }
