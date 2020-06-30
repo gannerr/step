@@ -35,7 +35,9 @@
     </div>
 
     <section class="section section-dark">
-      <button onclick="getReviews()">Gimme some reviews!</button>
+      <label for="max-comments"># of Comments (between 1 and 5):</label>
+      <input type="number" id="max-comments" name="max-comments" min="1" max="5">
+      <button onclick="getReviews()">Most Recent Reviews!</button>
       <div id="reviews-container"></div> 
 
       <form action="/reviews" method="POST">
@@ -45,6 +47,10 @@
         <p>Review:</p>
         <textarea name="reviewer-input"></textarea><br>
         <input type="submit" />
+      </form>
+      
+      <form action="/delete-data" method="POST">
+        <button onclick="deleteReviews()">Delete Reviews!</button>
       </form>
     </section>
   </body>

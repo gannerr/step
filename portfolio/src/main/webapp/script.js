@@ -20,9 +20,19 @@ function expandImage(imgs) {
 }
 
 function getReviews() {
-  fetch('/reviews?max-reviews=2').then(response => response.json()).then((reviews) => {
+  var query = document.getElementById("max-comments").value;
+  fetch('/reviews?max-reviews='+query).then(response => response.json()).then((reviews) => {
     document.getElementById('reviews-container').innerText = "";
-    for(let review in reviews) {
+    for(let review of reviews) {
+      document.getElementById('reviews-container').innerText += review + '\n\n';
+    }
+  });
+}
+
+function deleteReviews() {
+  fetch('/delete-data').then(response => response.json()).then((reviews) => {
+    document.getElementById('reviews-container').innerText = "";
+    for(let review of reviews) {
       document.getElementById('reviews-container').innerText += review + '\n\n';
     }
   });
