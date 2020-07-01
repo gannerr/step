@@ -63,26 +63,26 @@ label {
 }
 
 .button{
-  width: 170px;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  text-align: center;
   color: #000;
-  text-transform: uppercase;
-  font-weight: 600;
-  margin-left: 30px;
-  margin-bottom: 30px;
   cursor: pointer;
   display: inline-block;
+  font-weight: 600;
+  margin-bottom: 30px;
+  margin-left: 30px;
+  padding-bottom: 30px;
+  padding-top: 30px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 170px;
 }
 
 .submit-button {
   background-color: transparent;
   border: 3px solid #00d7c3;
   border-radius: 50px;
-  -webkit-transition: all .15s ease-in-out;
-  transition: all .15s ease-in-out;
   color: #00d7c3;
+  transition: all .15s ease-in-out;
+  -webkit-transition: all .15s ease-in-out;
 }
 
 .submit-button:hover {
@@ -145,8 +145,10 @@ label {
     -0.2rem 0.1rem 1rem #ff65bd, 0.2rem 0.1rem 1rem #ff65bd,
     0 -0.5rem 2rem #ff2483, 0 0.5rem 3rem #ff2483;
   animation: shine 2s forwards, flicker 3s infinite;
+  margin: 50px;
 }
 
+/* Cause text to increase / decrease glow */
 @keyframes blink {
   0%,
   22%,
@@ -169,14 +171,17 @@ label {
   }
 }
 
+/* medium speed shine/blink */
 .flicker {
   animation: shine 2s forwards, blink 3s 2s infinite;
 }
 
+/* fast speed shine/blink */
 .fast-flicker {
   animation: shine 2s forwards, blink 10s 1s infinite;
 }
 
+/* glow text */
 @keyframes shine {
   0% {
     color: #6b1839;
@@ -190,6 +195,7 @@ label {
   }
 }
 
+/* make text go from glowing -> dim -> glowing */
 @keyframes flicker {
   from {
     opacity: 1;
