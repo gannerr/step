@@ -21,6 +21,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.Key;
 import com.google.gson.Gson;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -30,12 +31,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
-@WebServlet("/reviews")
-public class DataServlet extends HttpServlet {
+@WebServlet("/delete-data")
+public class DeleteDataServlet extends HttpServlet {
   @Override
-  public void init() {
-  }
+  public void init(){}
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -44,21 +43,9 @@ public class DataServlet extends HttpServlet {
     PreparedQuery allReviews = datastore.prepare(reviewQuery);
     ArrayList<String> reviews = new ArrayList<String>();
 
-    int maxComments = getMaxReviews(request);
-
-    if (maxComments == -1) {
-      response.setContentType("text/html");
-      response.getWriter().println("Please enter a positive integer");
-      return;
-    }
-
-    int commentCount = 0;
     for (Entity review : allReviews.asIterable()) {
-      if(commentCount < maxComments){
-        String reviewOutput = (String) review.getProperty("review");
-        reviews.add(reviewOutput);
-      }
-      commentCount++;
+      String reviewOutput = (String) review.getProperty("review");
+      reviews.add(reviewOutput);
     }
 
     String reviewJson = new Gson().toJson(reviews);
@@ -68,43 +55,14 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Get the input from the form. If we have null/empty input, abort.
-    String name = request.getParameter("reviewer-name");
-    String input = request.getParameter("reviewer-input");
-
-    if(name.length() == 0 || input.length() == 0) {
-        response.sendRedirect("/reviews.html");
-        return;
-    }
-
-    String review = name + " said: \n" + input;
-    Entity reviewEntity = new Entity("Task");
-    reviewEntity.setProperty("review", review);
-
+    Query reviewQuery = new Query("Task").addSort("review", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(reviewEntity);
+    PreparedQuery allReviews = datastore.prepare(reviewQuery);
+    ArrayList<Key> keys = new ArrayList<>();
+    for(Entity review : allReviews.asIterable()){
+      keys.add(review.getKey());
+    }
+    datastore.delete(keys);
     response.sendRedirect("/reviews.html");
-  }
-
-  private int getMaxReviews(HttpServletRequest request) {
-    // Get the input from the form.
-    String maxReviews = request.getParameter("max-reviews");
-
-    // Convert the input to an int.
-    int maxReview;
-    try {
-      maxReview = Integer.parseInt(maxReviews);
-    } catch (NumberFormatException e) {
-      System.err.println("Could not convert to int: " + maxReviews);
-      return -1;
-    }
-
-    // Check that the input is positive
-    if (maxReview < 1) {
-      System.err.println("Surely you want to see SOME reviews");
-      return -1;
-    }
-
-    return maxReview;
   }
 }
