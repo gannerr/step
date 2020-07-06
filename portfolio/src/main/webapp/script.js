@@ -42,8 +42,8 @@ function deleteReviews() {
 function createMap() {
   const map = new google.maps.Map(
     document.getElementById('map'), {
-      center: {lat: 37.422, lng: -122.084},
-      zoom: 16,
+      center: {lat: 42.1784, lng: -87.9979},
+      zoom: 11,
       styles: [
         {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
         {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
@@ -125,4 +125,55 @@ function createMap() {
         }
         ]
     });
+
+    setMarkers(map);
+}
+
+// Data for the markers consisting of a name, a LatLng and a zIndex for the
+// order in which these markers should display on top of each other.
+var restaurants = [
+  ['Bonta', 42.1992, -87.9333, 4],
+  ['Walker Bros', 42.194679260253906, -87.92904663085938, 5],
+  ['Lou Malnati\'s', 42.15217208862305, -87.96086883544922, 3],
+  ['Joanie\'s', 42.178654, -87.9975738, 2],
+  ['Portillo\'s', 42.2409503, -87.9474605, 1]
+];
+
+function setMarkers(map) {
+  // Adds markers to the map.
+
+  // Marker sizes are expressed as a Size of X,Y where the origin of the image
+  // (0,0) is located in the top left of the image.
+
+  // Origins, anchor positions and coordinates of the marker increase in the X
+  // direction to the right and in the Y direction down.
+  var image = {
+    url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+    // This marker is 20 pixels wide by 32 pixels high.
+    size: new google.maps.Size(20, 32),
+    // The origin for this image is (0, 0).
+    origin: new google.maps.Point(0, 0),
+    // The anchor for this image is the base of the flagpole at (0, 32).
+    anchor: new google.maps.Point(0, 32)
+  };
+
+  // Shapes define the clickable region of the icon. The type defines an HTML
+  // <area> element 'poly' which traces out a polygon as a series of X,Y points.
+  // The final coordinate closes the poly by connecting to the first coordinate.
+  var shape = {
+    coords: [1, 1, 1, 20, 18, 20, 18, 1],
+    type: 'poly'
+  };
+  for (let restaurant of restaurants) {
+    var marker = new google.maps.Marker({
+      position: {lat: restaurant[1], lng: restaurant[2]},
+      map: map,
+      icon: image,
+      shape: shape,
+      title: restaurant[0],
+      zIndex: restaurant[3]
+    });
+    
+    marker.setMap(map);
+  }
 }
