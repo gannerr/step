@@ -129,14 +129,41 @@ function createMap() {
     setMarkers(map);
 }
 
+window.onload = createMap;
+
 // Data for the markers consisting of a name, a LatLng and a zIndex for the
 // order in which these markers should display on top of each other.
 var restaurants = [
-  ['Bonta', 42.1992, -87.9333, 4],
-  ['Walker Bros', 42.194679260253906, -87.92904663085938, 5],
-  ['Lou Malnati\'s', 42.15217208862305, -87.96086883544922, 3],
-  ['Joanie\'s', 42.178654, -87.9975738, 2],
-  ['Portillo\'s', 42.2409503, -87.9474605, 1]
+  {
+    "name": 'Bonta', 
+    "latitude": 42.1992, 
+    "longitude": -87.9333, 
+    "zIndex": 4
+  },
+  {
+    "name": 'Walker Bros', 
+    "latitude": 42.194679260253906, 
+    "longitude": -87.92904663085938, 
+    "zIndex": 5
+  },
+  {
+    "name": 'Lou Malnati\'s', 
+    "latitude": 42.15217208862305, 
+    "longitude": -87.96086883544922, 
+    "zIndex": 3
+  },
+  {
+    "name": 'Joanie\'s', 
+    "latitude": 42.178654, 
+    "longitude": -87.9975738, 
+    "zIndex": 2
+  },
+  {
+    "name": 'Portillo\'s', 
+    "latitude": 42.2409503, 
+    "longitude": -87.9474605, 
+    "zIndex": 1
+  }
 ];
 
 function setMarkers(map) {
@@ -148,7 +175,7 @@ function setMarkers(map) {
   // Origins, anchor positions and coordinates of the marker increase in the X
   // direction to the right and in the Y direction down.
   var image = {
-    url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+    url: '/images/beachflag.png',
     // This marker is 20 pixels wide by 32 pixels high.
     size: new google.maps.Size(20, 32),
     // The origin for this image is (0, 0).
@@ -166,12 +193,12 @@ function setMarkers(map) {
   };
   for (let restaurant of restaurants) {
     var marker = new google.maps.Marker({
-      position: {lat: restaurant[1], lng: restaurant[2]},
+      position: {lat: restaurant.latitude, lng: restaurant.longitude},
       map: map,
       icon: image,
       shape: shape,
-      title: restaurant[0],
-      zIndex: restaurant[3]
+      title: restaurant.name,
+      zIndex: restaurant.zIndex
     });
     
     marker.setMap(map);
