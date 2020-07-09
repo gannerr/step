@@ -55,7 +55,7 @@ public class DataServlet extends HttpServlet {
 
     int commentCount = 0;
     for (Entity review : allReviews.asIterable()) {
-      if(commentCount < maxComments) {
+      if (commentCount < maxComments) {
         String reviewOutput = (String) review.getProperty("review");
         reviews.add(reviewOutput);
       }
@@ -73,7 +73,7 @@ public class DataServlet extends HttpServlet {
     String name = request.getParameter("reviewer-name");
     String input = request.getParameter("reviewer-input");
 
-    if(name.length() == 0 || input.length() == 0) {
+    if (name.length() == 0 || input.length() == 0) {
         response.sendRedirect("/reviews.html");
         return;
     }

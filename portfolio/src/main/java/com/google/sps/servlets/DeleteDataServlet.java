@@ -59,7 +59,7 @@ public class DeleteDataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery allReviews = datastore.prepare(reviewQuery);
     ArrayList<Key> keys = new ArrayList<>();
-    for(Entity review : allReviews.asIterable()) {
+    for (Entity review : allReviews.asIterable()) {
       keys.add(review.getKey());
     }
     datastore.delete(keys);
