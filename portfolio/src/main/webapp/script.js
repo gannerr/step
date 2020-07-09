@@ -20,20 +20,20 @@ function expandImage(imgs) {
 }
 
 function getReviews() {
-  var query = document.getElementById('max-comments').value;
+  var query = document.getElementById('maxcomments').value;
   fetch('/reviews?max-reviews='+query).then(response => response.json()).then((reviews) => {
-    document.getElementById('reviews-container').innerText = "";
+    document.getElementById('reviewscontainer').innerText = "";
     for (const review of reviews) {
-      document.getElementById('reviews-container').innerText += review + '\n\n';
+      document.getElementById('reviewscontainer').innerText += review + '\n\n';
     }
   });
 }
 
 function deleteReviews() {
   fetch('/delete-data').then(response => response.json()).then((reviews) => {
-    document.getElementById('reviews-container').innerText = "";
+    document.getElementById('reviewscontainer').innerText = "";
     for (let review of reviews) {
-      document.getElementById('reviews-container').innerText += review + '\n\n';
+      document.getElementById('reviewscontainer').innerText += review + '\n\n';
     }
   });
 }
@@ -213,13 +213,13 @@ function fetchLoginStatus() {
     //we can just check the length of return message to ascertain if
     //we are logged in or out
     if(loginStatus.length < 100) {
-      document.getElementById('submit-reviews-form').style.visibility = "hidden";
-      document.getElementById("check-reviews-form").style.visibility = "hidden";
+      document.getElementById('submitreviewsform').style.visibility = "hidden";
+      document.getElementById("checkreviewsform").style.visibility = "hidden";
       window.location = "/login";
     }
     else {
-      document.getElementById("submit-reviews-form").style.visibility = "visible";
-      document.getElementById("check-reviews-form").style.visibility = "visible";
+      document.getElementById("submitreviewsform").style.visibility = "visible";
+      document.getElementById("checkreviewsform").style.visibility = "visible";
     }
   });
 }
