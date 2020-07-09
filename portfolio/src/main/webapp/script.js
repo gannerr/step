@@ -13,17 +13,17 @@
 // limitations under the License.
 
 function expandImage(imgs) {
-  var expandImg = document.getElementById("expandedImg");
+  let expandImg = document.getElementById('expandedImg');
   expandImg.src = imgs.src;
-  expandImg.parentElement.style.display = "block";
+  expandImg.parentElement.style.display = 'block';
   window.scrollTo(0,document.body.scrollHeight);
 }
 
 function getReviews() {
-  var query = document.getElementById("max-comments").value;
+  var query = document.getElementById('max-comments').value;
   fetch('/reviews?max-reviews='+query).then(response => response.json()).then((reviews) => {
     document.getElementById('reviews-container').innerText = "";
-    for(let review of reviews) {
+    for (const review of reviews) {
       document.getElementById('reviews-container').innerText += review + '\n\n';
     }
   });
@@ -32,7 +32,7 @@ function getReviews() {
 function deleteReviews() {
   fetch('/delete-data').then(response => response.json()).then((reviews) => {
     document.getElementById('reviews-container').innerText = "";
-    for(let review of reviews) {
+    for (let review of reviews) {
       document.getElementById('reviews-container').innerText += review + '\n\n';
     }
   });
@@ -124,9 +124,9 @@ function createMap() {
             stylers: [{color: '#17263c'}]
         }
         ]
-    });
-
-    setMarkers(map);
+    }
+  );
+  setMarkers(map);
 }
 
 window.onload = createMap;
@@ -213,7 +213,7 @@ function fetchLoginStatus() {
     //we can just check the length of return message to ascertain if
     //we are logged in or out
     if(loginStatus.length < 100) {
-      document.getElementById("submit-reviews-form").style.visibility = "hidden";
+      document.getElementById('submit-reviews-form').style.visibility = "hidden";
       document.getElementById("check-reviews-form").style.visibility = "hidden";
       window.location = "/login";
     }

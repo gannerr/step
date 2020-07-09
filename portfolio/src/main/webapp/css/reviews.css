@@ -13,7 +13,9 @@
   box-sizing: border-box;
 }
 
-input[type=text], select, textarea {
+input[type=text],
+select,
+textarea {
   width: 100%;
   padding: 12px;
   resize: none;
@@ -21,8 +23,8 @@ input[type=text], select, textarea {
   background-color: transparent;
   border: 3px solid #00d7c3;
   border-radius: 50px;
-  -webkit-transition: all .15s ease-in-out;
-  transition: all .15s ease-in-out;
+  -webkit-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
   color: #00d7c3;
   margin: 0px auto;
 }
@@ -62,7 +64,7 @@ label {
   clear: both;
 }
 
-.button{
+.button {
   color: #000;
   cursor: pointer;
   display: inline-block;
@@ -81,8 +83,8 @@ label {
   border: 3px solid #00d7c3;
   border-radius: 50px;
   color: #00d7c3;
-  transition: all .15s ease-in-out;
-  -webkit-transition: all .15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+  -webkit-transition: all 0.15s ease-in-out;
 }
 
 .submit-button:hover {
@@ -95,23 +97,23 @@ label {
   background-color: #3c73ff;
   border-radius: 20px;
   color: #fff;
-  transition: .3s;
+  transition: 0.3s;
 }
 .recent-button:hover {
   box-shadow: 8px 8px #99bdff;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .delete-button {
   background-color: transparent;
   border: 3px solid #ff0251;
   color: #ff0251;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .delete-button:hover {
   animation: pulse 1s infinite;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 @keyframes pulse {
@@ -119,14 +121,14 @@ label {
     transform: scale(1);
   }
   70% {
-    transform: scale(.9);
+    transform: scale(0.9);
   }
     100% {
     transform: scale(1);
   }
 }
 
-#reviews-container{
+#reviews-container {
   border-style: solid;
   border-color: blue;
 }
