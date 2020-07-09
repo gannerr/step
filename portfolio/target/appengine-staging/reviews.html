@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/reviews.css">
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <input type="checkbox" id="nav" class="hidden">
+        <label for="nav" class="nav-btn">
+          <i></i>
+          <i></i>
+          <i></i>
+        </label>
+        <div class="nav-wrapper">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="food.html">Food</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
+          <li><a href="maps.html">Maps</a></li>
+        </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="parallax-background-image black-background-image">
+      <div class="titlecontainer">
+        <span class="homepage-header-1">~Food Reviews~</span>
+        <span class="homepage-header-2">Gimme your love, or your roasts xD</span>
+      </div>
+    </div>
+
+    <section class="section section-dark">
+      <div class="sign">
+        <span class="fast-flicker">Gi</span>mm<span class="flicker">e</span>!
+      </div>
+      <div class="user-review-container">
+        <form action="/reviews" method="POST">
+          <div class="row">
+            <div class="col">
+              <input type="text" id="reviewer-name" name="reviewer-name" placeholder="Your name..">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <textarea id="reviewer-input" name="reviewer-input" placeholder="  Review here.." style="height:200px"></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <input type="submit" value="Submit" class="button submit-button">
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section section-dark">
+      <div class="sign">
+        <span class="fast-flicker">S</span>e<span class="flicker">e</span>!
+      </div>
+      <label for="max-comments"># of Reviews (between 1 and 5):</label>
+      <input type="number" id="max-comments" name="max-comments" min="1" max="5"><br>
+      <button onclick="getReviews()" class="button recent-button">Most Recent Reviews!</button>
+      <form action="/delete-data" method="POST">
+        <button onclick="deleteReviews()" class="button delete-button">Delete Reviews!</button>
+      </form> 
+      <br><div id="reviews-container"></div>
+    </section>
+  </body>
+</html>

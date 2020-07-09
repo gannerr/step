@@ -1,0 +1,79 @@
+.transition-image {
+  background: black;
+  color: white;
+  min-height: 50px;
+}
+
+.section {
+  text-align:center;
+  padding:50px 80px;
+}
+
+.bigsection {
+  text-align:center;
+  min-height: 400px;
+}
+
+.section-dark {
+  background-color: black;
+  color: white;
+}
+
+.abouttext {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 27px;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+}
+
+.abouttext .border.trans {
+  background-color: transparent;
+}
+
+@media(max-width:568px){
+  .black-background-image, .food-image {
+    background-attachment: scroll;
+  }
+}
+
+.column {
+  float: left;
+  width: 25%;
+  padding: 10px;
+}
+
+.column img {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.column img:hover {
+  opacity: 1;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.food-image-container {
+  display: block;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.closebtn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: white;
+  font-size: 35px;
+  cursor: pointer;
+}

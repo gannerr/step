@@ -1,0 +1,30 @@
+/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+#map {
+  border: thin solid black;
+  height: 500px;
+  width: 500px;
+}
+
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.section {
+  text-align: center;
+  padding: 100px 160px;
+  min-height: 100%;
+}
+
+.section-dark {
+  background-color: black;
+  color: white;
+}
+
+* {
+  box-sizing: border-box;
+}

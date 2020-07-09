@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/food.css">
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <input type="checkbox" id="nav" class="hidden">
+        <label for="nav" class="nav-btn">
+          <i></i>
+          <i></i>
+          <i></i>
+        </label>
+        <div class="nav-wrapper">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="food.html">Food</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
+          <li><a href="maps.html">Maps</a></li>
+        </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="parallax-background-image black-background-image">
+      <div class="titlecontainer">
+        <span class="homepage-header-1">Menu</span>
+        <span class="homepage-header-2">My favorite dishes from the past year ^.^</span>
+      </div>
+    </div>
+
+    <div class="parallax-background-image transition-image">
+      <div class="abouttext">
+        <span class="border trans">
+          Appetizers
+        </span>
+      </div>
+    </div>
+
+    <section class="section section-dark">
+      <div class="row">
+        <div class="column">
+          <img src="/images/appetizers/pate.jpg" width="200" height="200" onclick="expandImage(this);">
+          <h2>Pate</h2>
+        </div>
+        <div class="column">
+          <img src="/images/appetizers/cheesecurds.jpg" width="200" height="200" onclick="expandImage(this);">
+          <h2>Cheesecurds</h2>
+        </div>
+        <div class="column">
+          <img src="/images/appetizers/yolkbun.jpg" width="200" height="200" onclick="expandImage(this);">
+          <h2>Egg Yolk Bun</h2>
+        </div>
+        <div class="column">
+          <img src="/images/appetizers/karaage.jpg" width="200" height="200" onclick="expandImage(this);">
+          <h2>Chicken Karaage</h2>
+        </div>
+      </div>
+    </section>
+
+    <div class="parallax-background-image transition-image">
+      <div class="abouttext">
+        <span class="border trans">
+          Entrees
+        </span>
+      </div>
+    </div>
+
+    <section class="section section-dark">
+      <div class="row">
+        <div class="column">
+          <img src="/images/entrees/squidinkramen.jpg" width="200" height="200" onclick="expandImage(this);">
+          <h2>Squid Ink Ramen</h2>
+        </div>
+        <div class="column">
+          <img src="/images/entrees/porkbelly.jpg" width="200" height="200" onclick="expandImage(this);">
+          <h2>Braised Pork Belly</h2>
+        </div>
+        <div class="column">
+          <img src="/images/entrees/samgyupsal.jpg" width="200" height="200" onclick="expandImage(this);">
+          <h2>Samgyeopsal</h2>
+        </div>
+        <div class="column">
+          <img src="/images/entrees/thai.jpg" width="200" height="200" onclick="expandImage(this);">
+          <h2>All Thai food.</h2>
+        </div>
+      </div>
+    </section>
+
+    <div class="parallax-background-image transition-image">
+      <div class="abouttext">
+        <span class="border trans">
+          Dessert
+        </span>
+      </div>
+    </div>
+
+    <section class="section section-dark">
+      <div class="row">
+        <div class="column">
+          <img src="/images/dessert/waffle.jpg" width="200" height="200" onclick="expandImage(this);">
+          <h2>Bubble Waffle</h2>
+        </div>
+        <div class="column">
+          <img src="/images/dessert/toffeecake.jpg" width="200" height="200" onclick="expandImage(this);">
+          <h2>Toffee Cake</h2>
+        </div>
+        <div class="column">
+          <img src="/images/dessert/baklava.jpg" width="200" height="200" onclick="expandImage(this);">
+          <h2>Baklava</h2>
+        </div>
+        <div class="column">
+          <img src="/images/dessert/crepecake.jpg" width="200" height="200" onclick="expandImage(this);">
+          <h2>Matcha Crepe Cake</h2>
+        </div>
+      </div>
+    </section>
+
+    <div class="parallax-background-image transition-image">
+      <div class="abouttext">
+        <span class="border trans">
+          Chef's Choice
+        </span>
+      </div>
+    </div>
+
+    <section class="section section-dark">
+      <div class="row">
+        <div class="column">
+          <img src="/images/personal/whitecastle.jpg" width="200" height="200" onclick="expandImage(this);">
+          <h2>Sliders</h2>
+        </div>
+        <div class="column">
+          <img src="/images/personal/hotmilk.jpg" width="200" height="200" onclick="expandImage(this);">
+          <h2>IYKYK</h2>
+        </div>
+        <div class="column">
+          <img src="/images/personal/icecream.jpg" width="200" height="200" onclick="expandImage(this);">
+          <h2>Ice Cream</h2>
+        </div>
+        <div class="column">
+          <img src="/images/personal/boba.jpg" width="200" height="200" onclick="expandImage(this);">
+          <h2>Brown Sugar Milk Tea. Yeah I'm basic.</h2>
+        </div>
+      </div>
+    </section>
+
+    <div class="food-image-container">
+      <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+      <img id="expandedImg" style="width:100%">
+    </div>
+  </body>
+</html>
