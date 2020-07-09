@@ -20,13 +20,9 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -74,8 +70,8 @@ public class DataServlet extends HttpServlet {
     String input = request.getParameter("reviewer-input");
 
     if (name.length() == 0 || input.length() == 0) {
-        response.sendRedirect("/reviews.html");
-        return;
+      response.sendRedirect("/reviews.html");
+      return;
     }
 
     String review = name + " said: \n" + input;
