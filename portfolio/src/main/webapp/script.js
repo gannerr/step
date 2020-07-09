@@ -13,15 +13,16 @@
 // limitations under the License.
 
 function expandImage(imgs) {
-  let expandImg = document.getElementById('expandedImg');
+  const expandImg = document.getElementById('expandedImg');
   expandImg.src = imgs.src;
   expandImg.parentElement.style.display = 'block';
-  window.scrollTo(0,document.body.scrollHeight);
+  window.scrollTo(0, document.body.scrollHeight);
 }
 
 function getReviews() {
-  var query = document.getElementById('max-comments').value;
-  fetch('/reviews?max-reviews='+query).then(response => response.json()).then((reviews) => {
+  const query = document.getElementById('max-comments').value;
+  fetch('/reviews?max-reviews='+query).then((response) => response.json())
+  .then((reviews) => {
     document.getElementById('reviews-container').innerText = "";
     for (const review of reviews) {
       document.getElementById('reviews-container').innerText += review + '\n\n';
@@ -30,7 +31,7 @@ function getReviews() {
 }
 
 function deleteReviews() {
-  fetch('/delete-data').then(response => response.json()).then((reviews) => {
+  fetch('/delete-data').then((response) => response.json()).then((reviews) => {
     document.getElementById('reviews-container').innerText = "";
     for (let review of reviews) {
       document.getElementById('reviews-container').innerText += review + '\n\n';

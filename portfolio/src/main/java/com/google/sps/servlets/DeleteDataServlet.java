@@ -14,17 +14,17 @@
 
 package com.google.sps.servlets;
 
-import java.io.IOException;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
-import com.google.appengine.api.datastore.Key;
 import com.google.gson.Gson;
-import java.util.Arrays;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/delete-data")
 public class DeleteDataServlet extends HttpServlet {
   @Override
-  public void init(){}
+  public void init() {}
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -59,7 +59,7 @@ public class DeleteDataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery allReviews = datastore.prepare(reviewQuery);
     ArrayList<Key> keys = new ArrayList<>();
-    for(Entity review : allReviews.asIterable()){
+    for(Entity review : allReviews.asIterable()) {
       keys.add(review.getKey());
     }
     datastore.delete(keys);
