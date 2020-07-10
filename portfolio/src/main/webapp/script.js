@@ -21,9 +21,8 @@ function expandImage(imgs) {
 
 function getReviews() {
   const query = document.getElementById('max-comments').value;
-  fetch('/reviews?max-reviews='+query).then((response) => response.json())
-  .then((reviews) => {
-    document.getElementById('reviews-container').innerText = "";
+  fetch('/reviews?max-reviews='+query).then((response) => response.json()).then((reviews) => {
+    document.getElementById('reviews-container').innerText = '';
     for (const review of reviews) {
       document.getElementById('reviews-container').innerText += review + '\n\n';
     }
@@ -32,7 +31,7 @@ function getReviews() {
 
 function deleteReviews() {
   fetch('/delete-data').then((response) => response.json()).then((reviews) => {
-    document.getElementById('reviews-container').innerText = "";
+    document.getElementById('reviews-container').innerText = '';
     for (let review of reviews) {
       document.getElementById('reviews-container').innerText += review + '\n\n';
     }
