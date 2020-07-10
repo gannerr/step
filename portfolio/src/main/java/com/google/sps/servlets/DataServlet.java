@@ -20,6 +20,8 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -65,6 +67,8 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    UserService userService = UserServiceFactory.getUserService();
+
     // Get the input from the form. If we have null/empty input, abort.
     String name = request.getParameter("reviewer-name");
     String input = request.getParameter("reviewer-input");
@@ -74,7 +78,8 @@ public class DataServlet extends HttpServlet {
       return;
     }
 
-    String review = name + " said: \n" + input;
+    String email = userService.getCurrentUser().getEmail();
+    String review = name + " (" + email + ") said: \n" + input;
     Entity reviewEntity = new Entity("Task");
     reviewEntity.setProperty("review", review);
 
