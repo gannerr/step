@@ -14,19 +14,15 @@
 
 package com.google.sps.servlets;
 
-import java.io.IOException;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
 import com.google.gson.Gson;
-import java.util.Arrays;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,8 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/reviews")
 public class DataServlet extends HttpServlet {
   @Override
-  public void init() {
-  }
+  public void init() {}
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -56,7 +51,7 @@ public class DataServlet extends HttpServlet {
 
     int commentCount = 0;
     for (Entity review : allReviews.asIterable()) {
-      if(commentCount < maxComments){
+      if (commentCount < maxComments) {
         String reviewOutput = (String) review.getProperty("review");
         reviews.add(reviewOutput);
       }
@@ -74,9 +69,9 @@ public class DataServlet extends HttpServlet {
     String name = request.getParameter("reviewer-name");
     String input = request.getParameter("reviewer-input");
 
-    if(name.length() == 0 || input.length() == 0) {
-        response.sendRedirect("/reviews.html");
-        return;
+    if (name.length() == 0 || input.length() == 0) {
+      response.sendRedirect("/reviews.html");
+      return;
     }
 
     String review = name + " said: \n" + input;

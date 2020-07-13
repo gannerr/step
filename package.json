@@ -1,0 +1,30 @@
+{
+  "name": "step",
+  "version": "1.0.0",
+  "description": "This repo contains Andrew Gan's portfolio and STEP projects",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gannerr/step.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gannerr/step/issues"
+  },
+  "homepage": "https://github.com/gannerr/step#readme",
+  "devDependencies": {
+    "eslint": "^7.4.0",
+    "eslint-config-google": "^0.14.0",
+    "htmllint-cli": "0.0.7",
+    "markdownlint": "^0.20.4",
+    "stylelint": "^13.6.1",
+    "stylelint-config-standard": "^20.0.0"
+  }
+}

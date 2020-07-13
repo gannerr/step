@@ -13,7 +13,9 @@
   box-sizing: border-box;
 }
 
-input[type=text], select, textarea {
+input[type=text],
+select,
+textarea {
   width: 100%;
   padding: 12px;
   resize: none;
@@ -21,10 +23,10 @@ input[type=text], select, textarea {
   background-color: transparent;
   border: 3px solid #00d7c3;
   border-radius: 50px;
-  -webkit-transition: all .15s ease-in-out;
-  transition: all .15s ease-in-out;
+  -webkit-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
   color: #00d7c3;
-  margin: 0px auto;
+  margin: auto;
 }
 
 input[type=text]:hover {
@@ -56,13 +58,13 @@ label {
 }
 
 /* Clear floats after the columns */
-.row:after {
+.row::after {
   content: "";
   display: table;
   clear: both;
 }
 
-.button{
+.button {
   color: #000;
   cursor: pointer;
   display: inline-block;
@@ -81,8 +83,8 @@ label {
   border: 3px solid #00d7c3;
   border-radius: 50px;
   color: #00d7c3;
-  transition: all .15s ease-in-out;
-  -webkit-transition: all .15s ease-in-out;
+  transition: all 0.15s ease-in-out;
+  -webkit-transition: all 0.15s ease-in-out;
 }
 
 .submit-button:hover {
@@ -95,56 +97,66 @@ label {
   background-color: #3c73ff;
   border-radius: 20px;
   color: #fff;
-  transition: .3s;
+  transition: 0.3s;
 }
+
 .recent-button:hover {
   box-shadow: 8px 8px #99bdff;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .delete-button {
   background-color: transparent;
   border: 3px solid #ff0251;
   color: #ff0251;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .delete-button:hover {
   animation: pulse 1s infinite;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 @keyframes pulse {
   0% {
     transform: scale(1);
   }
+
   70% {
-    transform: scale(.9);
+    transform: scale(0.9);
   }
-    100% {
+
+  100% {
     transform: scale(1);
   }
 }
 
-#reviews-container{
+#reviews-container {
   border-style: solid;
   border-color: blue;
 }
 
 .sign {
-  background-image: radial-gradient(
-    ellipse 50% 35% at 50% 50%,
-    #6b1839,
-    transparent
-  );
+  background-image:
+    radial-gradient(
+      ellipse 50% 35% at 50% 50%,
+      #6b1839,
+      transparent
+    );
   letter-spacing: 2;
   text-transform: uppercase;
   font-size: 6em;
   color: #ffe6ff;
-  text-shadow: 0 0 0.6rem #ffe6ff, 0 0 1.5rem #ff65bd,
-    -0.2rem 0.1rem 1rem #ff65bd, 0.2rem 0.1rem 1rem #ff65bd,
-    0 -0.5rem 2rem #ff2483, 0 0.5rem 3rem #ff2483;
-  animation: shine 2s forwards, flicker 3s infinite;
+  text-shadow:
+    0 0 0.6rem #ffe6ff,
+    0 0 1.5rem #ff65bd,
+    -0.2rem 0.1rem 1rem #ff65bd,
+    0.2rem 0.1rem 1rem #ff65bd,
+    0 -0.5rem 2rem #ff2483,
+    0 0.5rem 3rem #ff2483;
+  animation:
+    shine 2s forwards,
+    flicker 3s infinite;
   margin: 50px;
 }
 
@@ -155,15 +167,21 @@ label {
   36%,
   75% {
     color: #ffe6ff;
-    text-shadow: 0 0 0.6rem #ffe6ff, 0 0 1.5rem #ff65bd,
-      -0.2rem 0.1rem 1rem #ff65bd, 0.2rem 0.1rem 1rem #ff65bd,
-      0 -0.5rem 2rem #ff2483, 0 0.5rem 3rem #ff2483;
+    text-shadow:
+      0 0 0.6rem #ffe6ff,
+      0 0 1.5rem #ff65bd,
+      -0.2rem 0.1rem 1rem #ff65bd,
+      0.2rem 0.1rem 1rem #ff65bd,
+      0 -0.5rem 2rem #ff2483,
+      0 0.5rem 3rem #ff2483;
   }
+
   28%,
   33% {
     color: #ff65bd;
     text-shadow: none;
   }
+
   82%,
   97% {
     color: #ff2483;
@@ -173,12 +191,16 @@ label {
 
 /* medium speed shine/blink */
 .flicker {
-  animation: shine 2s forwards, blink 3s 2s infinite;
+  animation:
+    shine 2s forwards,
+    blink 3s 2s infinite;
 }
 
 /* fast speed shine/blink */
 .fast-flicker {
-  animation: shine 2s forwards, blink 10s 1s infinite;
+  animation:
+    shine 2s forwards,
+    blink 10s 1s infinite;
 }
 
 /* glow text */
@@ -187,11 +209,16 @@ label {
     color: #6b1839;
     text-shadow: none;
   }
+
   100% {
     color: #ffe6ff;
-    text-shadow: 0 0 0.6rem #ffe6ff, 0 0 1.5rem #ff65bd,
-      -0.2rem 0.1rem 1rem #ff65bd, 0.2rem 0.1rem 1rem #ff65bd,
-      0 -0.5rem 2rem #ff2483, 0 0.5rem 3rem #ff2483;
+    text-shadow:
+      0 0 0.6rem #ffe6ff,
+      0 0 1.5rem #ff65bd,
+      -0.2rem 0.1rem 1rem #ff65bd,
+      0.2rem 0.1rem 1rem #ff65bd,
+      0 -0.5rem 2rem #ff2483,
+      0 0.5rem 3rem #ff2483;
   }
 }
 
@@ -320,4 +347,8 @@ label {
   to {
     opacity: 1;
   }
+}
+
+.reviewer-input {
+  height: 200px;
 }
