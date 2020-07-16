@@ -22,6 +22,11 @@ import java.util.Comparator;
 import java.util.List;
 
 public final class FindMeetingQuery {
+
+
+  /**
+   * A comparator for sorting Event's timeranges by their start time in ascending order.
+   */
   public static final Comparator<Event> SORT_BY_START = new Comparator<Event>() {
     @Override
     public int compare(Event a, Event b) {
@@ -29,141 +34,163 @@ public final class FindMeetingQuery {
     }
   };
 
+
+  /**
+   * Sorting events based on their start time in ascending order
+   */
   public List<Event> sortEvents(Collection<Event> events, MeetingRequest request) {
-    List<Event> eventsList = new ArrayList<Event>();
+    List<Event> eventsWithPossibleConflicts = new ArrayList<Event>();
     for (Event event : events) {
       if (request.getAttendees().containsAll(event.getAttendees())) {
-        eventsList.add(event);
+        eventsWithPossibleConflicts.add(event);
       }
     }
 
-    Collections.sort(eventsList, SORT_BY_START);
-    return eventsList;
+    Collections.sort(eventsWithPossibleConflicts, SORT_BY_START);
+    return eventsWithPossibleConflicts;
   }
 
-  public List<TimeRange> mergeEvents(Collection<Event> events, MeetingRequest request, List<Event> eventsList) {
-    List<TimeRange> mergedEventsList = new ArrayList<TimeRange>();
-    if (eventsList.size() >= 2) {
-      for (int i = 0; i < eventsList.size()-1; i++) {
-        Event event1 = eventsList.get(i);
-        Event event2 = eventsList.get(i+1);
+
+  /**
+   * A comparator for sorting ranges by their start time in ascending order.
+   */
+  public List<TimeRange> mergeEvents(Collection<Event> events, MeetingRequest request, List<Event> eventsWithPossibleConflicts) {
+    List<TimeRange> unavailableTimeRanges = new ArrayList<TimeRange>();
+
+    //if there are more than 2 events, then there may be possible conflicts that require merging
+    //otherwise, there will be 1 event (0 events case has already been resolved) 
+    //and we don't have to do any merging
+    if (eventsWithPossibleConflicts.size() == 1) {
+      unavailableTimeRanges.add(eventsWithPossibleConflicts.get(0).getWhen());
+    } else {
+      for (int i = 0; i < eventsWithPossibleConflicts.size()-1; i++) {
+        Event event1 = eventsWithPossibleConflicts.get(i);
+        Event event2 = eventsWithPossibleConflicts.get(i+1);
         if (event1.getWhen().contains(event2.getWhen())) {
-          mergedEventsList.add(event1.getWhen());
+          unavailableTimeRanges.add(event1.getWhen());
         } else if (event1.getWhen().overlaps(event2.getWhen())) {
-          mergedEventsList.add(TimeRange.fromStartEnd(event1.getWhen().start(), event2.getWhen().end(), false));
+          unavailableTimeRanges.add(TimeRange.fromStartEnd(event1.getWhen().start(), event2.getWhen().end(), false));
         } else {
-          mergedEventsList.add(event1.getWhen());
-          mergedEventsList.add(event2.getWhen());
+          unavailableTimeRanges.add(event1.getWhen());
+          unavailableTimeRanges.add(event2.getWhen());
         }
       } 
-    } else {
-      mergedEventsList.add(eventsList.get(0).getWhen());
     }
 
-    return mergedEventsList;
+    return unavailableTimeRanges;
   }
   
-  public Collection<TimeRange> sectionTime(Collection<Event> events, MeetingRequest request, List<TimeRange> mergedEventsList) {
-    Collection<TimeRange> expected = new ArrayList();
+  //convert blocked times to available times
+  public Collection<TimeRange> sectionTime(Collection<Event> events, MeetingRequest request, List<TimeRange> unavailableTimeRanges) {
+    Collection<TimeRange> possibleTimesForMeeting = new ArrayList();
+    int start = 0;
 
-    int start = 0, end = 0;
-    if (mergedEventsList.size() >= 2) {
-      if (mergedEventsList.get(0).start() != TimeRange.START_OF_DAY) {
-        expected.add(TimeRange.fromStartEnd(start, mergedEventsList.get(0).start(), false));
-      }
-      for (int i = 0; i < mergedEventsList.size()-1; i++) {
-        TimeRange event1 = mergedEventsList.get(i);
-        TimeRange event2 = mergedEventsList.get(i+1);
-        TimeRange secondHalf = TimeRange.fromStartEnd(event1.end(), event2.start(), false);
-        if (event2.start() - event1.end() >= request.getDuration()) {
-          expected.add(secondHalf);
+    //Prelim check to see if we can host a meeting from start of day to start of first event
+    if (unavailableTimeRanges.get(0).start() != TimeRange.START_OF_DAY
+      && unavailableTimeRanges.get(0).start() >= request.getDuration()) {
+      possibleTimesForMeeting.add(TimeRange.fromStartEnd(start, unavailableTimeRanges.get(0).start(), false));
+    }
+    //check if there is space for a meeting from end of first event to start of last event
+    //only occurs if we have more than 2 events to inspect, as otherwise it's just
+    //start of day to event and event to end of day
+    if (unavailableTimeRanges.size() >= 2) {
+      for (int i = 0; i < unavailableTimeRanges.size()-1; i++) {
+        TimeRange event1 = unavailableTimeRanges.get(i);
+        TimeRange event2 = unavailableTimeRanges.get(i+1);
+        TimeRange goodTime = TimeRange.fromStartEnd(event1.end(), event2.start(), false);
+        if (goodTime.duration() >= request.getDuration()) {
+          possibleTimesForMeeting.add(goodTime);
         }
         start = event1.end();
       }
-
-      if (mergedEventsList.get(mergedEventsList.size()-1).end() < TimeRange.END_OF_DAY) {
-        expected.add(TimeRange.fromStartEnd(mergedEventsList.get(mergedEventsList.size()-1).end(), TimeRange.END_OF_DAY, true));
-      }
-    } else {
-      if (mergedEventsList.get(0).start() != TimeRange.START_OF_DAY) {
-        expected.add(TimeRange.fromStartEnd(start, mergedEventsList.get(0).start(), false));
-      }
-      if (mergedEventsList.get(0).end() < TimeRange.END_OF_DAY) {
-        expected.add(TimeRange.fromStartEnd(mergedEventsList.get(0).end(), TimeRange.END_OF_DAY, true));
-      }
+    }
+    //check if there is space for a meeting from end of last event to end of day
+    if (unavailableTimeRanges.get(unavailableTimeRanges.size()-1).end() < TimeRange.END_OF_DAY
+      && TimeRange.END_OF_DAY - unavailableTimeRanges.get(unavailableTimeRanges.size()-1).end() >= request.getDuration()) {
+      possibleTimesForMeeting.add(TimeRange.fromStartEnd(unavailableTimeRanges.get(unavailableTimeRanges.size()-1).end(), TimeRange.END_OF_DAY, true));
     }
 
-    return expected;
+    return possibleTimesForMeeting;
   }
 
+  /**
+  * Returns a Collection of TimeRanges that will contain the best times to  host a meeting
+  *
+  * @param  events  every current event that a person is attending, which will not be good times to host a meeting
+  * @param  request the requested meeting, which specifies the people required to attend and how long it's for
+  * @return         a Collection of TimeRanges that will contain the best times to  host a meeting
+  */
   public Collection<TimeRange> buildQuery(Collection<Event> events, MeetingRequest request) {
+    List<Event> eventsWithPossibleConflicts = new ArrayList<Event>();
     // sort events by start time
-    List<Event> eventsList = new ArrayList<Event>();
-    eventsList = sortEvents(events, request);
+    eventsWithPossibleConflicts = sortEvents(events, request);
     
     //ignore people not attending
-    if (eventsList.isEmpty()) {
-      Collection<TimeRange> expected = Arrays.asList(TimeRange.WHOLE_DAY);
-      return expected;
+    if (eventsWithPossibleConflicts.isEmpty()) {
+      Collection<TimeRange> possibleTimesForMeeting = Arrays.asList(TimeRange.WHOLE_DAY);
+      return possibleTimesForMeeting;
     }
 
+    List<TimeRange> unavailableTimeRanges = new ArrayList<TimeRange>();
     //merge event times
-    List<TimeRange> mergedEventsList = new ArrayList<TimeRange>();
-    mergedEventsList = mergeEvents(events, request, eventsList);
+    unavailableTimeRanges = mergeEvents(events, request, eventsWithPossibleConflicts);
     
+    Collection<TimeRange> possibleTimesForMeeting = new ArrayList<TimeRange>();
     //divide time into before event & after event
-    Collection<TimeRange> expected = new ArrayList<TimeRange>();
-    expected = sectionTime(events, request, mergedEventsList);
+    possibleTimesForMeeting = sectionTime(events, request, unavailableTimeRanges);
 
     //ignores people not attending
-    if (eventsList.isEmpty()) {
-      expected.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY, true));
+    if (eventsWithPossibleConflicts.isEmpty()) {
+      possibleTimesForMeeting.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY, true));
     }
 
     //considers the case wherein we have both mandatory and optional attendees.
     //If one or more time slots exists so that both mandatory and optional attendees can attend, 
     //return those time slots. Otherwise, return the time slots that fit just the mandatory attendees.
-    if (!expected.isEmpty() && !request.getOptionalAttendees().isEmpty()) {
+    if (!possibleTimesForMeeting.isEmpty() && !request.getOptionalAttendees().isEmpty()) {
       MeetingRequest newRequest = new MeetingRequest(request.getOptionalAttendees(), request.getDuration());
-      Collection<TimeRange> optionalExpected = buildQuery(events, newRequest);
+      Collection<TimeRange> optionalpossibleTimesForMeeting = buildQuery(events, newRequest);
       Collection<TimeRange> bestTimes = new ArrayList<TimeRange>();
 
-      for (TimeRange mandatoryTime : expected) {
-        for (TimeRange optionalTime : optionalExpected) {
+      for (TimeRange mandatoryTime : possibleTimesForMeeting) {
+        for (TimeRange optionalTime : optionalpossibleTimesForMeeting) {
           if (optionalTime.contains(mandatoryTime)) {
             bestTimes.add(mandatoryTime);
             break;
           }
         }
       }
+
       if (!bestTimes.isEmpty()) {
         return bestTimes;
       }
     }
 
-    return expected;
+    return possibleTimesForMeeting;
   }
 
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     if (request.getDuration() > TimeRange.WHOLE_DAY.duration()) { 
-      Collection<TimeRange> expected = Arrays.asList();
-      return expected;
-    } else if (events.isEmpty()) {
-      Collection<TimeRange> expected = Arrays.asList(TimeRange.WHOLE_DAY);
-      return expected;
-    } else if (request.getAttendees().isEmpty()) {
-      if(request.getOptionalAttendees().isEmpty()) {
-        Collection<TimeRange> expected = Arrays.asList(TimeRange.WHOLE_DAY);
-        return expected;
-      } else {
-        MeetingRequest newRequest = new MeetingRequest(request.getOptionalAttendees(), request.getDuration());
-        request = newRequest;
-        Collection<TimeRange> expected = buildQuery(events, request);
-        return expected;
+      Collection<TimeRange> possibleTimesForMeeting = Collections.emptyList();
+      return possibleTimesForMeeting;
+    } 
+    
+    if (events.isEmpty()) {
+      Collection<TimeRange> possibleTimesForMeeting = Arrays.asList(TimeRange.WHOLE_DAY);
+      return possibleTimesForMeeting;
+    } 
+    
+    if (request.getAttendees().isEmpty()) {
+      if (request.getOptionalAttendees().isEmpty()) {
+        Collection<TimeRange> possibleTimesForMeeting = Arrays.asList(TimeRange.WHOLE_DAY);
+        return possibleTimesForMeeting;
       }
-    } else {
-      Collection<TimeRange> expected = buildQuery(events, request);
-      return expected;
+
+      MeetingRequest newRequest = new MeetingRequest(request.getOptionalAttendees(), request.getDuration());
+      request = newRequest;
     }
+
+    Collection<TimeRange> possibleTimesForMeeting = buildQuery(events, request);
+    return possibleTimesForMeeting;
   }
 }
