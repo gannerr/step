@@ -29,85 +29,141 @@ public final class FindMeetingQuery {
     }
   };
 
+  public List<Event> sortEvents(Collection<Event> events, MeetingRequest request) {
+    List<Event> eventsList = new ArrayList<Event>();
+    for (Event event : events) {
+      if (request.getAttendees().containsAll(event.getAttendees())) {
+        eventsList.add(event);
+      }
+    }
+
+    Collections.sort(eventsList, SORT_BY_START);
+    return eventsList;
+  }
+
+  public List<TimeRange> mergeEvents(Collection<Event> events, MeetingRequest request, List<Event> eventsList) {
+    List<TimeRange> mergedEventsList = new ArrayList<TimeRange>();
+    if (eventsList.size() >= 2) {
+      for (int i = 0; i < eventsList.size()-1; i++) {
+        Event event1 = eventsList.get(i);
+        Event event2 = eventsList.get(i+1);
+        if (event1.getWhen().contains(event2.getWhen())) {
+          mergedEventsList.add(event1.getWhen());
+        } else if (event1.getWhen().overlaps(event2.getWhen())) {
+          mergedEventsList.add(TimeRange.fromStartEnd(event1.getWhen().start(), event2.getWhen().end(), false));
+        } else {
+          mergedEventsList.add(event1.getWhen());
+          mergedEventsList.add(event2.getWhen());
+        }
+      } 
+    } else {
+      mergedEventsList.add(eventsList.get(0).getWhen());
+    }
+
+    return mergedEventsList;
+  }
+  
+  public Collection<TimeRange> sectionTime(Collection<Event> events, MeetingRequest request, List<TimeRange> mergedEventsList) {
+    Collection<TimeRange> expected = new ArrayList();
+
+    int start = 0, end = 0;
+    if (mergedEventsList.size() >= 2) {
+      if (mergedEventsList.get(0).start() != TimeRange.START_OF_DAY) {
+        expected.add(TimeRange.fromStartEnd(start, mergedEventsList.get(0).start(), false));
+      }
+      for (int i = 0; i < mergedEventsList.size()-1; i++) {
+        TimeRange event1 = mergedEventsList.get(i);
+        TimeRange event2 = mergedEventsList.get(i+1);
+        TimeRange secondHalf = TimeRange.fromStartEnd(event1.end(), event2.start(), false);
+        if (event2.start() - event1.end() >= request.getDuration()) {
+          expected.add(secondHalf);
+        }
+        start = event1.end();
+      }
+
+      if (mergedEventsList.get(mergedEventsList.size()-1).end() < TimeRange.END_OF_DAY) {
+        expected.add(TimeRange.fromStartEnd(mergedEventsList.get(mergedEventsList.size()-1).end(), TimeRange.END_OF_DAY, true));
+      }
+    } else {
+      if (mergedEventsList.get(0).start() != TimeRange.START_OF_DAY) {
+        expected.add(TimeRange.fromStartEnd(start, mergedEventsList.get(0).start(), false));
+      }
+      if (mergedEventsList.get(0).end() < TimeRange.END_OF_DAY) {
+        expected.add(TimeRange.fromStartEnd(mergedEventsList.get(0).end(), TimeRange.END_OF_DAY, true));
+      }
+    }
+
+    return expected;
+  }
+
+  public Collection<TimeRange> buildQuery(Collection<Event> events, MeetingRequest request) {
+    // sort events by start time
+    List<Event> eventsList = new ArrayList<Event>();
+    eventsList = sortEvents(events, request);
+    
+    //ignore people not attending
+    if (eventsList.isEmpty()) {
+      Collection<TimeRange> expected = Arrays.asList(TimeRange.WHOLE_DAY);
+      return expected;
+    }
+
+    //merge event times
+    List<TimeRange> mergedEventsList = new ArrayList<TimeRange>();
+    mergedEventsList = mergeEvents(events, request, eventsList);
+    
+    //divide time into before event & after event
+    Collection<TimeRange> expected = new ArrayList<TimeRange>();
+    expected = sectionTime(events, request, mergedEventsList);
+
+    //ignores people not attending
+    if (eventsList.isEmpty()) {
+      expected.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY, true));
+    }
+
+    //considers the case wherein we have both mandatory and optional attendees.
+    //If one or more time slots exists so that both mandatory and optional attendees can attend, 
+    //return those time slots. Otherwise, return the time slots that fit just the mandatory attendees.
+    if (!expected.isEmpty() && !request.getOptionalAttendees().isEmpty()) {
+      MeetingRequest newRequest = new MeetingRequest(request.getOptionalAttendees(), request.getDuration());
+      Collection<TimeRange> optionalExpected = buildQuery(events, newRequest);
+      Collection<TimeRange> bestTimes = new ArrayList<TimeRange>();
+
+      for (TimeRange mandatoryTime : expected) {
+        for (TimeRange optionalTime : optionalExpected) {
+          if (optionalTime.contains(mandatoryTime)) {
+            bestTimes.add(mandatoryTime);
+            break;
+          }
+        }
+      }
+      if (!bestTimes.isEmpty()) {
+        return bestTimes;
+      }
+    }
+
+    return expected;
+  }
+
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     if (request.getDuration() > TimeRange.WHOLE_DAY.duration()) { 
       Collection<TimeRange> expected = Arrays.asList();
       return expected;
-    } else if (events.isEmpty() || request.getAttendees().isEmpty()) {
+    } else if (events.isEmpty()) {
       Collection<TimeRange> expected = Arrays.asList(TimeRange.WHOLE_DAY);
       return expected;
-    } else {
-      // sort events by start time
-      List<Event> eventsList = new ArrayList<Event>();
-      for (Event event : events) {
-        if (request.getAttendees().containsAll(event.getAttendees())) {
-          eventsList.add(event);
-        }
-      }
-      Collections.sort(eventsList, SORT_BY_START);
-      
-      //ignore people not attending
-      if (eventsList.isEmpty()) {
+    } else if (request.getAttendees().isEmpty()) {
+      if(request.getOptionalAttendees().isEmpty()) {
         Collection<TimeRange> expected = Arrays.asList(TimeRange.WHOLE_DAY);
         return expected;
-      }
-
-      //merge event times
-      List<TimeRange> mergedEventsList = new ArrayList<TimeRange>();
-      if (eventsList.size() >= 2) {
-        for (int i = 0; i < eventsList.size()-1; i++) {
-          Event event1 = eventsList.get(i);
-          Event event2 = eventsList.get(i+1);
-          if (event1.getWhen().contains(event2.getWhen())) {
-            mergedEventsList.add(event1.getWhen());
-          } else if (event1.getWhen().overlaps(event2.getWhen())) {
-            mergedEventsList.add(TimeRange.fromStartEnd(event1.getWhen().start(), event2.getWhen().end(), false));
-          } else {
-            mergedEventsList.add(event1.getWhen());
-            mergedEventsList.add(event2.getWhen());
-          }
-        }
       } else {
-        mergedEventsList.add(eventsList.get(0).getWhen());
+        MeetingRequest newRequest = new MeetingRequest(request.getOptionalAttendees(), request.getDuration());
+        request = newRequest;
+        Collection<TimeRange> expected = buildQuery(events, request);
+        return expected;
       }
-      
-      //divide time into before event & after event
-      Collection<TimeRange> expected = new ArrayList<TimeRange>();
-      int start = 0, end = 0;
-      if (mergedEventsList.size() >= 2) {
-        if (mergedEventsList.get(0).start() != TimeRange.START_OF_DAY) {
-          expected.add(TimeRange.fromStartEnd(start, mergedEventsList.get(0).start(), false));
-        }
-        for (int i = 0; i < mergedEventsList.size()-1; i++) {
-          TimeRange event1 = mergedEventsList.get(i);
-          TimeRange event2 = mergedEventsList.get(i+1);
-          TimeRange secondHalf = TimeRange.fromStartEnd(event1.end(), event2.start(), false);
-          if (event2.start() - event1.end() >= request.getDuration()) {
-            expected.add(secondHalf);
-          }
-          start = event1.end();
-        }
-
-        if (mergedEventsList.get(mergedEventsList.size()-1).end() < TimeRange.END_OF_DAY) {
-          expected.add(TimeRange.fromStartEnd(mergedEventsList.get(mergedEventsList.size()-1).end(), TimeRange.END_OF_DAY, true));
-        }
-      } else {
-          if (mergedEventsList.get(0).start() != TimeRange.START_OF_DAY) {
-            expected.add(TimeRange.fromStartEnd(start, mergedEventsList.get(0).start(), false));
-          }
-          if (mergedEventsList.get(0).end() < TimeRange.END_OF_DAY) {
-            expected.add(TimeRange.fromStartEnd(mergedEventsList.get(0).end(), TimeRange.END_OF_DAY, true));
-          }
-      }
-
-
-      //ingores people not attending
-      if (eventsList.isEmpty()) {
-        expected.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY, true));
-      }
-      //Collection.sort(expected, TimeRange.ORDER_BY_START);
+    } else {
+      Collection<TimeRange> expected = buildQuery(events, request);
       return expected;
     }
-    //throw new UnsupportedOperationException("TODO: Implement this method.");
   }
 }
