@@ -36,12 +36,12 @@ public final class FindMeetingQuery {
 
 
   /**
-   * Sorting events based on their start time in ascending order
+   * Filtering and sorting events based on their start time in ascending order
    */
   public List<Event> sortEvents(Collection<Event> events, MeetingRequest request) {
     List<Event> eventsWithPossibleConflicts = new ArrayList<Event>();
     for (Event event : events) {
-      if (request.getAttendees().containsAll(event.getAttendees())) {
+      if (!Collections.disjoint(request.getAttendees(), event.getAttendees())) {
         eventsWithPossibleConflicts.add(event);
       }
     }
@@ -52,7 +52,7 @@ public final class FindMeetingQuery {
 
 
   /**
-   * A comparator for sorting ranges by their start time in ascending order.
+   * Merging overlapping events
    */
   public List<TimeRange> mergeEvents(Collection<Event> events, MeetingRequest request, List<Event> eventsWithPossibleConflicts) {
     List<TimeRange> unavailableTimeRanges = new ArrayList<TimeRange>();
@@ -81,7 +81,7 @@ public final class FindMeetingQuery {
   }
   
   //convert blocked times to available times
-  public Collection<TimeRange> sectionTime(Collection<Event> events, MeetingRequest request, List<TimeRange> unavailableTimeRanges) {
+  private Collection<TimeRange> findAvailableTimeRanges(Collection<Event> events, MeetingRequest request, List<TimeRange> unavailableTimeRanges) {
     Collection<TimeRange> possibleTimesForMeeting = new ArrayList();
     int start = 0;
 
@@ -137,7 +137,7 @@ public final class FindMeetingQuery {
     
     Collection<TimeRange> possibleTimesForMeeting = new ArrayList<TimeRange>();
     //divide time into before event & after event
-    possibleTimesForMeeting = sectionTime(events, request, unavailableTimeRanges);
+    possibleTimesForMeeting = findAvailableTimeRanges(events, request, unavailableTimeRanges);
 
     //ignores people not attending
     if (eventsWithPossibleConflicts.isEmpty()) {

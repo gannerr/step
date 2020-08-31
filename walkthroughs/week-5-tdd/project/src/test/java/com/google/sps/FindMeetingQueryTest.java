@@ -124,7 +124,7 @@ public final class FindMeetingQueryTest {
   }
 
   @Test
-  public void everyAttendeeIsConsideredOptionalAllDay() {
+  public void attendeeIsConsideredOptionalAllDay() {
     // includes an optional attendee C who has an all-day event
     // Events  : |--------------C--------------|
     // Events  :       |--A--|     |--B--|
@@ -153,7 +153,7 @@ public final class FindMeetingQueryTest {
   }
 
   @Test
-  public void everyAttendeeIsConsideredOptional() {
+  public void attendeeIsConsideredOptional() {
     // includes an optional attendee C who has an all-day event
     // Events  :             |--C--|
     // Events  :       |--A--|     |--B--|
@@ -283,7 +283,7 @@ public final class FindMeetingQueryTest {
   }
 
   @Test
-  public void justEnoughRoomOptional() {
+  public void justEnoughRoomWithOptionalAttendee() {
     // Have one person, but make it so that there is just enough room at one point in the day to
     // have the meeting. Also add in an optional attendee B who should be ignored since 
     // consideering their schedule would result in a time slot smaller than the requested time
@@ -360,7 +360,7 @@ public final class FindMeetingQueryTest {
   }
 
   @Test
-  public void noMandatoryAttendeesGaps() {
+  public void noMandatoryAttendeesOptionalAttendeesWithGaps() {
     // Have two optional attendees with gaps in their schedules
     //
     // Events  : |--A--|     |----B----|
